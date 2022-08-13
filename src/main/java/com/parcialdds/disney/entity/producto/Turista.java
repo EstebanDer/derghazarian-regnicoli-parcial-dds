@@ -1,4 +1,4 @@
-package com.parcialdds.disney.entity;
+package com.parcialdds.disney.entity.producto;
 
 import javax.persistence.*;
 

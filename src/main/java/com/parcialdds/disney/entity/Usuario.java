@@ -17,6 +17,23 @@ public class Usuario {
 
     private String cuil;
 
+    //region getters, setters y constructores
+    public Usuario(Long id, String nombre, String contrasenia, String cuil) {
+        this.id = id;
+        this.nombre = nombre;
+        this.contrasenia = contrasenia;
+        this.cuil = cuil;
+    }
+
+    public Usuario(String nombre, String contrasenia, String cuil) {
+        this.nombre = nombre;
+        this.contrasenia = contrasenia;
+        this.cuil = cuil;
+    }
+
+    public Usuario() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,4 +65,5 @@ public class Usuario {
     public void setCuil(String cuil) {
         this.cuil = cuil;
     }
+    //endregion
 }

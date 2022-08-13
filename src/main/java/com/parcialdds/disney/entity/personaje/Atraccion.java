@@ -1,14 +1,14 @@
-package com.parcialdds.disney.entity;
+package com.parcialdds.disney.entity.personaje;
 
 import javax.persistence.*;
 
 @Entity
 @Table
-public class Personaje {
+public class Atraccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20)
+    @Column(length = 30)
     private String nombre;
 }
