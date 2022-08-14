@@ -1,6 +1,9 @@
 package com.parcialdds.disney.entity.producto;
 
+import com.parcialdds.disney.entity.paquete.Paquete;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -11,6 +14,13 @@ public class Producto {
 
     @Column
     private Integer montoFinal;
+
+    @OneToMany
+    @JoinColumn(name = "turistaId")
+    private List<Turista> turista;
+
+    @OneToOne
+    private Paquete paquete;
 
     //region getters y setters
 

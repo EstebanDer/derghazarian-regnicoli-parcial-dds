@@ -20,6 +20,22 @@ public class TarjetaDisney extends Tarjeta {
 
     private String estado;
 
+    //region getters y setters
+    public TarjetaDisney(Long id, Integer saldo, String estado) {
+        this.id = id;
+        this.saldo = saldo;
+        this.estado = estado;
+    }
+
+    public TarjetaDisney(Integer saldo, String estado) {
+        this.saldo = saldo;
+        this.estado = estado;
+    }
+
+    public  TarjetaDisney(){
+
+    }
+
     public Integer getSaldo() {
         return saldo;
     }

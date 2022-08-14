@@ -1,6 +1,7 @@
 package com.parcialdds.disney.entity.personaje;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -11,4 +12,10 @@ public class Personaje {
 
     @Column(length = 20)
     private String nombre;
+    
+    private Integer idApi;
+
+    @OneToMany
+    @JoinColumn(name = "idAtraccion")
+    private List<Atraccion> atraccion;
 }
