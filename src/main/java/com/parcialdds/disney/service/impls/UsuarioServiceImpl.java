@@ -1,7 +1,8 @@
-package com.parcialdds.disney.service;
+package com.parcialdds.disney.service.impls;
 
 import com.parcialdds.disney.entity.Usuario;
 import com.parcialdds.disney.repository.UsuarioRepository;
+import com.parcialdds.disney.service.interfaces.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;

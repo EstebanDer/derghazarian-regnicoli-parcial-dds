@@ -1,8 +1,10 @@
 package com.parcialdds.disney.entity.tarjetas.tarjetaDisney;
 
+import com.parcialdds.disney.entity.Usuario;
 import com.parcialdds.disney.entity.tarjetas.Tarjeta;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "TARJETASDISNEY")
@@ -34,5 +36,6 @@ public class TarjetaDisney extends Tarjeta {
         this.estado = estado;
     }
 
+    //endregion
 
 }

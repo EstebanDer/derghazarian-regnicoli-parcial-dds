@@ -1,11 +1,9 @@
 package com.parcialdds.disney.repository;
 
-
-import com.parcialdds.disney.entity.Usuario;
+import com.parcialdds.disney.entity.paquete.Paquete;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-
+@Repository
+public interface PaqueteRepository extends JpaRepository<Paquete, Long> {
 }

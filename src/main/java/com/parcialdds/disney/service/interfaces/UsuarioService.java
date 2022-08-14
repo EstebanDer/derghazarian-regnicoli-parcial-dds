@@ -1,4 +1,4 @@
-package com.parcialdds.disney.service;
+package com.parcialdds.disney.service.interfaces;
 
 import java.util.Optional;
 

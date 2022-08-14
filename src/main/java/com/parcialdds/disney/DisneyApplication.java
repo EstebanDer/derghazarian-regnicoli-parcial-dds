@@ -1,20 +1,42 @@
 package com.parcialdds.disney;
 
-import com.parcialdds.disney.entity.Usuario;
-import com.parcialdds.disney.service.UsuarioService;
+import com.parcialdds.disney.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Scanner;
 
 @SpringBootApplication
 public class DisneyApplication implements CommandLineRunner{
 	static Scanner scanner = new Scanner(System.in);
+
+    //region Servicios
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private TarjetaDisneyService tarjetaDisneyService;
+
+    @Autowired
+    private TarjetaCreditoService tarjetaCreditoService;
+
+    @Autowired
+    private PaqueteService paqueteService;
+
+    @Autowired
+    private PersonajeService personajeService;
+
+    @Autowired
+    private AtraccionService atraccionService;
+
+    @Autowired
+    private ProductoService productoService;
+
+    @Autowired
+    private TuristaService turistaService;
+    //endregion
 
 	public static void main(String[] args) {
 		SpringApplication.run(DisneyApplication.class, args);
@@ -25,13 +47,23 @@ public class DisneyApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Usuario usuario = new Usuario("Lucho", "esactamente", "1234567");
-		usuarioService.save(usuario); // Parece que estas cosas hay que hacer el este metodo (Lo que se de DB)
+//		Optional<Usuario> usuario = usuarioService.findById(4L);
+//		System.out.println(usuario.get().toString());
+//		TarjetaDisney tarjetaDisney = new TarjetaDisney(1500, "amarillo");
+//		tarjetaDisneyService.save(tarjetaDisney);
+
+
+//		Iterable<Usuario> usuarios = usuarioService.findAll();
+//		for(Usuario usuario : usuarios){
+//			System.out.println(usuario.toString());
+//		}
+
+
 		menuInicio();
 		menuPrincipal();
 	}
 
-	private static void menuInicio(){
+	private void menuInicio(){
 		System.out.println("Desea iniciar sesion (1) o registrarse? (2)");
 		Integer accion = scanner.nextInt();
 		switch(accion) {
@@ -47,7 +79,7 @@ public class DisneyApplication implements CommandLineRunner{
 		}
 	}
 
-	private static void menuPrincipal() {
+	private void menuPrincipal() {
 		System.out.println("Si desea administrar sus medios de pago ingrese 1 \n" +
 				"Si desea comprar un producto ingrese 2\n");
 		Integer accion = scanner.nextInt();
