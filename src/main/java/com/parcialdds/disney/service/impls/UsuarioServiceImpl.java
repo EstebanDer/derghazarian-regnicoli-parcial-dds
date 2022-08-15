@@ -46,4 +46,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void deleteById(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public boolean existsByNombreAndContrasenia(String nombre, String contrasenia) {return usuarioRepository.existsByNombreAndContrasenia(nombre, contrasenia);}
 }

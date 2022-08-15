@@ -1,4 +1,4 @@
 package com.parcialdds.disney.entity.producto;
 
-public class CalcularMontoDisney {
+public class EstrategiaDisney {
 }

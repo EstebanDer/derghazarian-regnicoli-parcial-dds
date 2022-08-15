@@ -7,6 +7,16 @@ public class Tarjeta {
     private String titular;
     private LocalDate fechaVencimiento;
 
+    //region getters y setters
+    public Tarjeta() {
+    }
+
+    public Tarjeta(String nroTarjeta, String titular, LocalDate fechaVencimiento) {
+        this.nroTarjeta = nroTarjeta;
+        this.titular = titular;
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
     public String getNroTarjeta() {
         return nroTarjeta;
     }
@@ -30,4 +40,15 @@ public class Tarjeta {
     public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
+
+    @Override
+    public String toString() {
+        return "Tarjeta{" +
+                "nroTarjeta='" + nroTarjeta + '\'' +
+                ", titular='" + titular + '\'' +
+                ", fechaVencimiento=" + fechaVencimiento +
+                '}';
+    }
+
+    //endregion
 }

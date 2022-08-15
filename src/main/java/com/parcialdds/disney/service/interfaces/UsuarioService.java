@@ -17,4 +17,6 @@ public interface UsuarioService {
     public Usuario save(Usuario usuario);
 
     public void deleteById(Long id);
+
+    public boolean existsByNombreAndContrasenia(String nombre, String contrasenia);
 }

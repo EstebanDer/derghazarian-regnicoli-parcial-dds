@@ -69,17 +69,40 @@ public class DisneyApplication implements CommandLineRunner{
 		switch(accion) {
 			case 1: {
 				//TODO: ingresar al sistema
+                ingresar();
 			} break;
 			case 2: {
 				//TODO: registrarse en el sistema
+                registrar();
 				//TODO: ingresar al sistema
+                ingresar();
 			} break;
 			default:
 				throw new IllegalStateException("Operacion desconocida: " + accion);
 		}
 	}
 
-	private void menuPrincipal() {
+    private void registrar() {
+        System.out.println("Ingrese un nombre de usuario");
+        String nombre = scanner.next();
+        System.out.println("Ingrese su CUIL");
+        String cuil = scanner.next();
+        System.out.println("Ingrese una contrasenia");
+        String contrasenia = scanner.next();
+        //TODO: Crear tarjeta disney para poder crear un usuario
+    }
+
+    private void ingresar() {
+        System.out.println("Ingrese su nombre de usuario");
+        String nombre = scanner.next();
+        System.out.println("Ingrese su contrasenia");
+        String contrasenia = scanner.next();
+        if(!usuarioService.existsByNombreAndContrasenia(nombre, contrasenia)){
+            //TODO: Que pasa si no es correcto?
+        }
+    }
+
+    private void menuPrincipal() {
 		System.out.println("Si desea administrar sus medios de pago ingrese 1 \n" +
 				"Si desea comprar un producto ingrese 2\n");
 		Integer accion = scanner.nextInt();

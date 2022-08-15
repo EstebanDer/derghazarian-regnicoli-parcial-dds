@@ -6,4 +6,9 @@ public class Amarillo extends Estado{
         // TODO
         return montoAPagar;
     }
+
+    @Override
+    public String getDescripcion() {
+        return "AMARILLO";
+    }
 }

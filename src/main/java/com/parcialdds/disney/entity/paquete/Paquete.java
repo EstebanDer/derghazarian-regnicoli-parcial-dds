@@ -14,9 +14,21 @@ public class Paquete {
 
     private Integer costoFijoXDia;
 
-    //private Enum??
+    @Enumerated(EnumType.ORDINAL)
+    private TipoHospedaje tipoHospedaje;
 
     private Boolean esPrototipo;
 
     private Boolean menuIncluido;
+
+
+    @Override
+    public String toString() {
+        return "Paquete{" +
+                "cantidadDias=" + cantidadDias +
+                ", costoFijoXDia=" + costoFijoXDia +
+                ", tipoHospedaje=" + tipoHospedaje.toString() +
+                ", menuIncluido=" + menuIncluido +
+                '}';
+    }
 }

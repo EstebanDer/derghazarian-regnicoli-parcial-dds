@@ -4,6 +4,7 @@ import com.parcialdds.disney.entity.Usuario;
 import com.parcialdds.disney.entity.tarjetas.Tarjeta;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Entity
@@ -21,14 +22,18 @@ public class TarjetaDisney extends Tarjeta {
     private String estado;
 
     //region getters y setters
-    public TarjetaDisney(Long id, Integer saldo, String estado) {
+    public TarjetaDisney(String nroTarjeta, String titular, LocalDate fechaVencimiento, Long id, Integer saldo, Estado estado) {
+        super(nroTarjeta, titular, fechaVencimiento);
         this.id = id;
         this.saldo = saldo;
+        this.nombreEstado = estado.getDescripcion();
         this.estado = estado;
     }
 
-    public TarjetaDisney(Integer saldo, String estado) {
+    public TarjetaDisney(String nroTarjeta, String titular, LocalDate fechaVencimiento, Integer saldo, Estado estado) {
+        super(nroTarjeta, titular, fechaVencimiento);
         this.saldo = saldo;
+        this.nombreEstado = estado.getDescripcion();
         this.estado = estado;
     }
 
@@ -44,11 +49,19 @@ public class TarjetaDisney extends Tarjeta {
         this.saldo = saldo;
     }
 
-    public String getEstado() {
+    public String getNombreEstado() {
+        return nombreEstado;
+    }
+
+    public void setNombreEstado(String nombreEstado) {
+        this.nombreEstado = nombreEstado;
+    }
+
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 

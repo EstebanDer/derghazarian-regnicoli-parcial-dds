@@ -16,12 +16,21 @@ public class Turista {
 
     private String dni;
 
-    public Long getId() {
-        return id;
+    //region getters y setters
+    public Turista() {
     }
 
-    public void setId(Long id) {
+    public Turista(Long id, String nombre, String apellido, String dni) {
         this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+    }
+
+    public Turista(String nombre, String apellido, String dni) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -47,4 +56,15 @@ public class Turista {
     public void setDni(String dni) {
         this.dni = dni;
     }
+
+    @Override
+    public String toString() {
+        return "Turista{" +
+                "nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", dni='" + dni + '\'' +
+                '}';
+    }
+
+    //endregion
 }

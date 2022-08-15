@@ -6,4 +6,9 @@ public class Verde extends Estado{
         // TODO
         return montoAPagar;
     }
+
+    @Override
+    public String getDescripcion() {
+        return "VERDE";
+    }
 }
