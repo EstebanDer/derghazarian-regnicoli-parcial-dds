@@ -19,7 +19,10 @@ public class TarjetaDisney extends Tarjeta {
     @Column(nullable = false)
     private Integer saldo;
 
-    private String estado;
+    private String nombreEstado;
+
+    @Transient
+    private Estado estado;
 
     //region getters y setters
     public TarjetaDisney(String nroTarjeta, String titular, LocalDate fechaVencimiento, Long id, Integer saldo, Estado estado) {

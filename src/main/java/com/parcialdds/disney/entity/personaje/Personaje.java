@@ -12,11 +12,11 @@ public class Personaje {
 
     @Column(length = 20)
     private String nombre;
-    
+
     private Integer idApi;
 
     @OneToMany
-    @JoinColumn(name = "idAtraccion")
+    @JoinColumn(name = "idPersonaje")
     private List<Atraccion> atraccion;
 
     //region getters y setters

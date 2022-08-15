@@ -1,5 +1,7 @@
 package com.parcialdds.disney.entity;
 
+import com.parcialdds.disney.entity.paquete.Paquete;
+import com.parcialdds.disney.entity.personaje.Personaje;
 import com.parcialdds.disney.entity.producto.Producto;
 import com.parcialdds.disney.entity.tarjetas.TarjetaCredito;
 import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.TarjetaDisney;
@@ -30,8 +32,14 @@ public class Usuario {
     private List<TarjetaCredito> tarjetaCredito;
 
     @OneToMany
-    @JoinColumn(name = "productoId")
+    @JoinColumn(name = "usuarioId")
     private List<Producto> producto;
+
+    @Transient
+    private Personaje personajeElegido;
+
+    @Transient
+    private Paquete paqueteElegido;
 
 
     //region getters y setters
