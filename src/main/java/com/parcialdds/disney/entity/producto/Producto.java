@@ -16,7 +16,7 @@ public class Producto {
     @Column
     private Integer montoFinal;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "productoId")
     private List<Turista> turista = new ArrayList<>();
 
@@ -34,6 +34,10 @@ public class Producto {
 
     @Transient
     private Integer monto;
+
+    public void calcularMontoFinal(){
+        montoFinal = medioDePago.calcularMontoFinal(monto, turista);
+    }
 
     //region getters y setters
     public Integer getMontoFinal() {
@@ -93,7 +97,7 @@ public class Producto {
         this.paquete = paquete;
         this.atraccion = atraccion;
         this.medioDePago = medioDePago;
-        this.monto = paquete.getMonto();
+        this.monto = paquete.getMonto() * turista.size();
     }
 
     public Producto(List<Turista> turista, Paquete paquete, List<Atraccion> atraccion, Estrategia medioDePago, Integer monto) {
@@ -101,7 +105,7 @@ public class Producto {
         this.paquete = paquete;
         this.atraccion = atraccion;
         this.medioDePago = medioDePago;
-        this.monto = paquete.getMonto();
+        this.monto = paquete.getMonto() * turista.size();
     }
 
     @Override

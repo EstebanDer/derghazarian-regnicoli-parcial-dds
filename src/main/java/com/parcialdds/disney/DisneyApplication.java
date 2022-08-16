@@ -1,5 +1,11 @@
 package com.parcialdds.disney;
 
+import com.parcialdds.disney.entity.Usuario;
+import com.parcialdds.disney.entity.paquete.Paquete;
+import com.parcialdds.disney.entity.paquete.TipoHospedaje;
+import com.parcialdds.disney.entity.tarjetas.TarjetaCredito;
+import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.Amarillo;
+import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.TarjetaDisney;
 import com.parcialdds.disney.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,18 +31,6 @@ public class DisneyApplication implements CommandLineRunner{
 
     @Autowired
     private PaqueteService paqueteService;
-
-    @Autowired
-    private PersonajeService personajeService;
-
-    @Autowired
-    private AtraccionService atraccionService;
-
-    @Autowired
-    private ProductoService productoService;
-
-    @Autowired
-    private TuristaService turistaService;
     //endregion
 
 	public static void main(String[] args) {
@@ -123,17 +117,28 @@ public class DisneyApplication implements CommandLineRunner{
 
     private void menuPrincipal() {
 		System.out.println("Si desea administrar sus medios de pago ingrese 1 \n" +
-				"Si desea comprar un producto ingrese 2\n");
+				"Si desea comprar un producto ingrese 2\n" +
+				"Si desea salir del sistema ingrese 3");
 		Integer accion = scanner.nextInt();
 		switch(accion){
 			case 1: {
-				System.out.println("Si desea registrar un nuevo medio de pago ingrese 1 \n" +
+				System.out.println("Si desea agregar una nueva tarjeta de credito ingrese 1 \n" +
 						"Si desea eliminar un medio de pago ingrese 2\n" +
 						"Si desea cargar su tarjeta Disney ingrese 3");
 				Integer accionTarjeta = scanner.nextInt();
 				switch (accionTarjeta) {
 					case 1: {
-						//TODO: registrar medio de pago
+						System.out.println("Ingrese el numero de la tarjeta");
+						String numeroTarjeta = scanner.next();
+						System.out.println("Ingrese el nombre del titular");
+						String titular = scanner.next();
+						System.out.println("Ingrese el limite de la tarjeta");
+						Integer limite = scanner.nextInt();
+
+						TarjetaCredito tarjetaCredito = new TarjetaCredito(numeroTarjeta, titular, limite);
+						usuario.agregarTarjetaCredito(tarjetaCredito);
+						tarjetaCreditoService.save(tarjetaCredito);
+						usuarioService.save(usuario);
 					} break;
 					case 2: {
 						System.out.println("Ingrese el numero de la tarjeta a borrar");
@@ -143,7 +148,19 @@ public class DisneyApplication implements CommandLineRunner{
 						tarjetaCreditoService.deleteByNroTarjeta(nroTarjeta);
 					} break;
 					case 3: {
-						//TODO: cargar tarjeta Disney
+						System.out.println("Ingrese el monto de la carga");
+						Integer monto = scanner.nextInt();
+						System.out.println("Ingrese el numero de la tarjeta de credito que utilizara para la carga");
+						String numeroTarjeta = scanner.next();
+						Optional<TarjetaCredito> tarjetaCredito = tarjetaCreditoService.findByNroTarjeta(numeroTarjeta);
+
+						if(usuario.cargarTarjetaDisney(monto, tarjetaCredito.get()) == 1) {
+							System.out.println("Carga realizada");
+							tarjetaCreditoService.save(tarjetaCredito.get());
+							tarjetaDisneyService.save(usuario.getTarjetaDisney());
+						} else {
+							System.out.println("No se pudo realizar la carga");
+						}
 					} break;
 					default:
 						throw new IllegalStateException("Operacion desconocida: " + accion);
@@ -151,7 +168,8 @@ public class DisneyApplication implements CommandLineRunner{
 
 			} break;
 			case 2: {
-				//TODO: realizar compra
+				Compra compra = new Compra();
+				compra.realizar(usuario);
 			} break;
 			case 3: {
 				 System.exit(0);
@@ -159,6 +177,35 @@ public class DisneyApplication implements CommandLineRunner{
 			default:
 				throw new IllegalStateException("Operacion desconocida: " + accion);
 		}
+	}
+
+	private void generarPrototipos() {
+		Paquete paquetePareja, paqueteFamiliar, paquetePremium;
+
+		paquetePareja = new Paquete(
+				7,
+				300,
+				TipoHospedaje.UNAHABITACION,
+				true,
+				true);
+
+		paqueteFamiliar = new Paquete(
+				10,
+				350,
+				TipoHospedaje.DOSHABITACIONES,
+				true,
+				false);
+
+		paquetePremium = new Paquete(
+				14,
+				500,
+				TipoHospedaje.SUITE,
+				true,
+				true);
+
+		paqueteService.save(paquetePareja);
+		paqueteService.save(paqueteFamiliar);
+		paqueteService.save(paquetePremium);
 	}
 
 

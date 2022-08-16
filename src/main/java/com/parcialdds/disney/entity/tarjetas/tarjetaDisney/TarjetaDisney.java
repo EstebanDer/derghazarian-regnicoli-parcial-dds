@@ -44,16 +44,16 @@ public class TarjetaDisney extends Tarjeta {
 
 
     //region getters y setters
-    public TarjetaDisney(String nroTarjeta, String titular, LocalDate fechaVencimiento, Long id, Integer saldo, Estado estado) {
-        super(nroTarjeta, titular, fechaVencimiento);
+    public TarjetaDisney(String nroTarjeta, String titular, Long id, Integer saldo, Estado estado) {
+        super(nroTarjeta, titular);
         this.id = id;
         this.saldo = saldo;
         this.nombreEstado = estado.getDescripcion();
         this.estado = estado;
     }
 
-    public TarjetaDisney(String nroTarjeta, String titular, LocalDate fechaVencimiento, Integer saldo, Estado estado) {
-        super(nroTarjeta, titular, fechaVencimiento);
+    public TarjetaDisney(String nroTarjeta, String titular, Integer saldo, Estado estado) {
+        super(nroTarjeta, titular);
         this.saldo = saldo;
         this.nombreEstado = estado.getDescripcion();
         this.estado = estado;

@@ -1,6 +1,7 @@
 package com.parcialdds.disney.entity.personaje;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Personaje {
 
     private Integer idApi;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idPersonaje")
     private List<Atraccion> atraccion = new ArrayList<>();
 
@@ -23,14 +24,14 @@ public class Personaje {
     public Personaje() {
     }
 
-    public Personaje(Long id, String nombre, Integer idApi, List<Atraccion> atraccion) {
+    public Personaje(Long id, String nombre, Integer idApi, ArrayList<Atraccion> atraccion) {
         this.id = id;
         this.nombre = nombre;
         this.idApi = idApi;
         this.atraccion = atraccion;
     }
 
-    public Personaje(String nombre, Integer idApi, List<Atraccion> atraccion) {
+    public Personaje(String nombre, Integer idApi, ArrayList<Atraccion> atraccion) {
         this.nombre = nombre;
         this.idApi = idApi;
         this.atraccion = atraccion;
@@ -56,7 +57,7 @@ public class Personaje {
         return atraccion;
     }
 
-    public void setAtraccion(List<Atraccion> atraccion) {
+    public void setAtraccion(ArrayList<Atraccion> atraccion) {
         this.atraccion = atraccion;
     }
 

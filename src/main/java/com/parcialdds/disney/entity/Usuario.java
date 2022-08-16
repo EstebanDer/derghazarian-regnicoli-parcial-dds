@@ -7,6 +7,7 @@ import com.parcialdds.disney.entity.tarjetas.TarjetaCredito;
 import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.TarjetaDisney;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,7 @@ public class Usuario {
     @OneToOne(cascade = {CascadeType.ALL})
     private TarjetaDisney tarjetaDisney;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "usuarioId")
     private List<TarjetaCredito> tarjetaCredito;
 
@@ -41,6 +42,33 @@ public class Usuario {
     @Transient
     private Paquete paqueteElegido;
 
+    public void agregarTarjetaCredito(TarjetaCredito unaTarjetaCredito) {
+        tarjetaCredito.add(unaTarjetaCredito);
+    }
+
+    public TarjetaCredito buscarTarjeta(String unNroTarjeta) {
+        return tarjetaCredito.stream().filter(tarjeta -> unNroTarjeta.equals(tarjeta.getNroTarjeta())).findFirst().orElse(null);
+    }
+
+    public void borrarTarjeta(String unNroTarjeta){
+        TarjetaCredito tarjeta = buscarTarjeta(unNroTarjeta);
+        tarjetaCredito.remove(tarjeta);
+    }
+
+    public void agregarProducto(Producto unProducto){
+        producto.add(unProducto);
+    }
+
+    public Integer cargarTarjetaDisney(Integer monto, TarjetaCredito tarjetaCredito) {
+        int resultado = tarjetaCredito.efectuarPago(monto);
+        if(resultado == 1){
+            tarjetaDisney.setSaldo(tarjetaDisney.getSaldo() + monto);
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
 
     //region getters y setters
     public Usuario(String nombre, String contrasenia, String cuil, TarjetaDisney tarjetaDisney, List<TarjetaCredito> tarjetaCredito) {

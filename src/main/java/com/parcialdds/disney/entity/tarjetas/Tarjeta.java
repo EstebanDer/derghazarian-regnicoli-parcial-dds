@@ -7,16 +7,14 @@ import java.time.LocalDate;
 public class Tarjeta {
     private String nroTarjeta;
     private String titular;
-    private LocalDate fechaVencimiento;
 
     //region getters y setters
     public Tarjeta() {
     }
 
-    public Tarjeta(String nroTarjeta, String titular, LocalDate fechaVencimiento) {
+    public Tarjeta(String nroTarjeta, String titular) {
         this.nroTarjeta = nroTarjeta;
         this.titular = titular;
-        this.fechaVencimiento = fechaVencimiento;
     }
 
     public String getNroTarjeta() {
@@ -35,20 +33,11 @@ public class Tarjeta {
         this.titular = titular;
     }
 
-    public LocalDate getFechaVencimiento() {
-        return fechaVencimiento;
-    }
-
-    public void setFechaVencimiento(LocalDate fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
-    }
-
     @Override
     public String toString() {
         return "Tarjeta{" +
                 "nroTarjeta='" + nroTarjeta + '\'' +
                 ", titular='" + titular + '\'' +
-                ", fechaVencimiento=" + fechaVencimiento +
                 '}';
     }
 

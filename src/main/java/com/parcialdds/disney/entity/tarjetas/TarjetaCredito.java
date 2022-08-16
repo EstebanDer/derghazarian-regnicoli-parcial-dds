@@ -14,18 +14,27 @@ public class TarjetaCredito extends Tarjeta {
     @Column(nullable = false)
     private Integer limite;
 
+    public Integer efectuarPago(Integer monto) {
+        if(limite < monto)
+            return -1;
+        else {
+            setLimite(limite - monto);
+            return 1;
+        }
+    }
+
     //region getters y setters
     public TarjetaCredito() {
     }
 
-    public TarjetaCredito(Long id, String nroTarjeta, String titular, LocalDate fechaVencimiento, Integer limite) {
-        super(nroTarjeta, titular, fechaVencimiento);
+    public TarjetaCredito(Long id, String nroTarjeta, String titular, Integer limite) {
+        super(nroTarjeta, titular);
         this.id = id;
         this.limite = limite;
     }
 
-    public TarjetaCredito(String nroTarjeta, String titular, LocalDate fechaVencimiento, Integer limite) {
-        super(nroTarjeta, titular, fechaVencimiento);
+    public TarjetaCredito(String nroTarjeta, String titular, Integer limite) {
+        super(nroTarjeta, titular);
         this.limite = limite;
     }
 
