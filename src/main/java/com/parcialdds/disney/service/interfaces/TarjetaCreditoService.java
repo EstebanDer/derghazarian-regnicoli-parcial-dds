@@ -1,5 +1,6 @@
 package com.parcialdds.disney.service.interfaces;
 
+import com.parcialdds.disney.entity.producto.Turista;
 import com.parcialdds.disney.entity.tarjetas.TarjetaCredito;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,9 @@ public interface TarjetaCreditoService {
     public Optional<TarjetaCredito> findById(Long id);
 
     public TarjetaCredito save(TarjetaCredito tarjetaCredito);
+
+    public Iterable<TarjetaCredito> saveAll(Iterable<TarjetaCredito> tarjetasCredito);
+
 
     public void deleteById(Long id);
 

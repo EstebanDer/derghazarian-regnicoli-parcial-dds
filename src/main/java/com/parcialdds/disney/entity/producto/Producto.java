@@ -2,6 +2,8 @@ package com.parcialdds.disney.entity.producto;
 
 import com.parcialdds.disney.entity.paquete.Paquete;
 import com.parcialdds.disney.entity.personaje.Atraccion;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.*;
@@ -23,7 +25,7 @@ public class Producto {
     @OneToOne
     private Paquete paquete;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "paseRapido",
             joinColumns = { @JoinColumn(name = "productoId")},
             inverseJoinColumns = { @JoinColumn(name = "atraccionId")})

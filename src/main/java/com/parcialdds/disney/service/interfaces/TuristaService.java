@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.parcialdds.disney.entity.producto.Turista;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TuristaService {
@@ -16,6 +17,8 @@ public interface TuristaService {
     public Optional<Turista> findById(Long id);
 
     public Turista save(Turista turista);
+
+    public Iterable<Turista> saveAll(Iterable<Turista> turistas);
 
     public void deleteById(Long id);
 }

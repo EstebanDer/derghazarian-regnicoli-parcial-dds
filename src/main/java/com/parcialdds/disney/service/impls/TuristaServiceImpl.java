@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,6 +41,8 @@ public class TuristaServiceImpl implements TuristaService {
     public Turista save(Turista turista) {
         return turistaRepository.save(turista);
     }
+
+    public Iterable<Turista> saveAll(Iterable<Turista> turistas) { return turistaRepository.saveAll(turistas);}
 
     @Override
     @Transactional

@@ -26,42 +26,21 @@ import static com.parcialdds.disney.DisneyApplication.scanner;
 
 public class Compra {
 
-    private Usuario usuario;
-    private Producto producto = new Producto();
-
-    // region Servicios
-    @Autowired
-    private UsuarioService usuarioService;
-    @Autowired
-    private PaqueteService paqueteService;
-
-    @Autowired
-    private AtraccionService atraccionService;
-
-    @Autowired
-    private ProductoService productoService;
-
-    @Autowired
-    private TuristaService turistaService;
-
-    @Autowired
-    private PersonajeService personajeService;
-    // endregion
-
-    public void realizar(Usuario usuario) {
-
-        producto.setPaquete(this.elegirPaquete());
-        producto.setAtraccion(elegirPersonaje().getAtraccion());
-        this.efectuarCompra();
+    public Producto realizar(Usuario usuario, Iterable<Paquete> catalogoPaquetes, Iterable<Personaje> personajes) {
+        Producto producto = new Producto();
+        producto.setPaquete(this.elegirPaquete(usuario, catalogoPaquetes));
+        producto.setAtraccion(elegirPersonaje(personajes).getAtraccion());
+        producto.setTurista(this.agregarTuristas());
+        this.pagar(usuario, producto);
+        return producto;
     }
 
-    public Paquete elegirPaquete() {
+    public Paquete elegirPaquete(Usuario usuario, Iterable<Paquete> paquetes) {
         Paquete paqueteElegido = new Paquete();
-        Iterable<Paquete> paquetes = paqueteService.findByEsPrototipoTrue();
         System.out.println("Seleccion uno de nuestros paquetes disponibles: \n");
         int i = 1;
         for(Paquete p : paquetes){
-            System.out.println("Ingrese" + i + " - Paquete \n" + p.toString());
+            System.out.println("Ingrese " + i + "\n" + p.toString());
             i++;
         }
         int codigoPaqueteElegido = scanner.nextInt();
@@ -97,13 +76,13 @@ public class Compra {
             paqueteElegido.setMenuIncluido(false);
     }
 
-    public Personaje elegirPersonaje(){
+    public Personaje elegirPersonaje(Iterable<Personaje> personajes){
         Personaje personajeFavorito = new Personaje();
         System.out.println("Personajes disponibles");
-        Iterable<Personaje> personajes = personajeService.findAll();
         int i = 1;
         for(Personaje p : personajes) {
-            System.out.println(i + " " + p.toString());
+            System.out.println("Ingrese " + i + " " + p.toString());
+            i++;
         }
         System.out.println("Seleccione algun personaje");
         String personajeElegido = scanner.next();
@@ -114,12 +93,13 @@ public class Compra {
         return personajeFavorito;
     }
 
-    private void agregarTuristas() {
+    public ArrayList<Turista> agregarTuristas() {
         ArrayList<Turista> turistas = new ArrayList<>();
         System.out.println("Cuantas personas se hospedaran");
         int cantPersonas = scanner.nextInt();
+        int nroPersona = 1;
         for(int i = 0; i < cantPersonas; i++){
-            System.out.println("Ingrese el nombre de el/la turista");
+            System.out.println("Turista numero: "+ nroPersona + " , ingrese el nombre del turista ");
             String nombre = scanner.next();
             System.out.println("Ingrese el apellido del turista");
             String apellido = scanner.next();
@@ -127,8 +107,9 @@ public class Compra {
             String dni = scanner.next();
             Turista turista = new Turista(nombre, apellido, dni);
             turistas.add(turista);
+            nroPersona++;
         }
-        producto.setTurista(turistas);
+        return turistas;
     }
 
     public void pagar(Usuario usuario, Producto producto) {
@@ -144,8 +125,6 @@ public class Compra {
                 if(codigoOperacion == 1){
                     System.out.println("Compra realizada");
                     usuario.getProducto().add(producto);
-                    productoService.save(producto);
-                    usuarioService.save(usuario);
                 }
                 else {
                     System.out.println("Error: Recargue su tarjeta");
@@ -157,14 +136,11 @@ public class Compra {
                 producto.setMontoFinal(producto.getMedioDePago().calcularMontoFinal(producto.getMonto(), producto.getTurista()));
                 System.out.println("Ingrese el numero de su tarjeta de credito");
                 String nroTarjeta = scanner.next();
-                TarjetaCredito tarjetaCredito = usuario.buscarTarjeta(nroTarjeta);
-                if(tarjetaCredito != null) {
-                    int codigoOperacion = tarjetaCredito.efectuarPago(producto.getMontoFinal());
+                if(usuario.buscarTarjeta(nroTarjeta) != null) {
+                    int codigoOperacion = usuario.buscarTarjeta(nroTarjeta).efectuarPago(producto.getMontoFinal());
                     if(codigoOperacion == 1){
                         System.out.println("Compra realizada");
                         usuario.getProducto().add(producto);
-                        productoService.save(producto);
-                        usuarioService.save(usuario);
                     } else {
                         System.out.println("Error: Limite insuficiente");
                     }

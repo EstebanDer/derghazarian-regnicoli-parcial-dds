@@ -3,6 +3,8 @@ package com.parcialdds.disney;
 import com.parcialdds.disney.entity.Usuario;
 import com.parcialdds.disney.entity.paquete.Paquete;
 import com.parcialdds.disney.entity.paquete.TipoHospedaje;
+import com.parcialdds.disney.entity.personaje.Personaje;
+import com.parcialdds.disney.entity.producto.Producto;
 import com.parcialdds.disney.entity.tarjetas.TarjetaCredito;
 import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.Amarillo;
 import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.TarjetaDisney;
@@ -51,16 +53,7 @@ public class DisneyApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-//		Optional<Usuario> usuario = usuarioService.findById(4L);
-//		System.out.println(usuario.get().toString());
-//		TarjetaDisney tarjetaDisney = new TarjetaDisney(1500, "amarillo");
-//		tarjetaDisneyService.save(tarjetaDisney);
-
-
-//		Iterable<Usuario> usuarios = usuarioService.findAll();
-//		for(Usuario usuario : usuarios){
-//			System.out.println(usuario.toString());
-//		}
+		//generarPrototipos(); --> Se ejecuta en una unica ejecucion para generar los prototipos
 		menuInicio();
 		while(true) {
 			menuPrincipal();
@@ -110,21 +103,24 @@ public class DisneyApplication implements CommandLineRunner{
 	}
 
 	private void ingresar() {
-        System.out.println("Ingrese su nombre de usuario");
-        String nombre = scanner.next();
-        System.out.println("Ingrese su contrasenia");
-        String contrasenia = scanner.next();
-        if(!usuarioService.existsByNombreAndContrasenia(nombre, contrasenia)){
-            System.out.println("Credenciales incorrectas, intente nuevamente");
-            ingresar();//TODO: Corregir
-        }
-		if(usuarioService.findByNombreAndContrasenia(nombre, contrasenia).isPresent()){
-			usuario = usuarioService.findByNombreAndContrasenia(nombre, contrasenia).get();
-			usuario.getTarjetaDisney().inicializarEstado();
-		} else{
-			throw new NoSuchElementException();
-		}
-
+		Boolean valor = true;
+		do {
+			System.out.println("Ingrese su nombre de usuario");
+			String nombre = scanner.next();
+			System.out.println("Ingrese su contrasenia");
+			String contrasenia = scanner.next();
+			if(!usuarioService.existsByNombreAndContrasenia(nombre, contrasenia)){
+				System.out.println("Credenciales incorrectas, intente nuevamente");
+			} else {
+				if(usuarioService.findByNombreAndContrasenia(nombre, contrasenia).isPresent()){
+					usuario = usuarioService.findByNombreAndContrasenia(nombre, contrasenia).get();
+					usuario.getTarjetaDisney().inicializarEstado();
+					valor = false;
+				} else{
+					throw new NoSuchElementException();
+				}
+			}
+		} while(valor);
     }
 
     private void menuPrincipal() {
@@ -181,7 +177,13 @@ public class DisneyApplication implements CommandLineRunner{
 			} break;
 			case 2: {
 				Compra compra = new Compra();
-				compra.realizar(usuario);
+                Iterable<Paquete> paquetes = paqueteService.findByEsPrototipoTrue();
+                Iterable<Personaje> personajes = personajeService.findAll();
+                Producto producto = compra.realizar(usuario, paquetes, personajes);
+				paqueteService.save(producto.getPaquete());
+				turistaService.saveAll(producto.getTurista());
+				productoService.save(producto);
+				usuarioService.save(usuario);
 			} break;
 			case 3: {
 				 System.exit(0);

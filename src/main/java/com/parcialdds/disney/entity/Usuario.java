@@ -5,6 +5,8 @@ import com.parcialdds.disney.entity.personaje.Personaje;
 import com.parcialdds.disney.entity.producto.Producto;
 import com.parcialdds.disney.entity.tarjetas.TarjetaCredito;
 import com.parcialdds.disney.entity.tarjetas.tarjetaDisney.TarjetaDisney;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,9 +30,12 @@ public class Usuario {
     @OneToOne(cascade = {CascadeType.ALL})
     private TarjetaDisney tarjetaDisney;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "usuarioId")
     private List<TarjetaCredito> tarjetaCredito;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
 
     @OneToMany
     @JoinColumn(name = "usuarioId")

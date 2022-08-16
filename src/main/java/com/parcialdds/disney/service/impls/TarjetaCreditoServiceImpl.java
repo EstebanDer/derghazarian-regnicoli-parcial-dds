@@ -44,6 +44,10 @@ public class TarjetaCreditoServiceImpl implements TarjetaCreditoService {
 
     @Override
     @Transactional
+    public Iterable<TarjetaCredito> saveAll(Iterable<TarjetaCredito> tarjetasCredito) { return tarjetaCreditoRepository.saveAll(tarjetasCredito); }
+
+    @Override
+    @Transactional
     public void deleteById(Long id) {
         tarjetaCreditoRepository.deleteById(id);
     }

@@ -1,6 +1,7 @@
 package com.parcialdds.disney.service.impls;
 
 import com.parcialdds.disney.entity.personaje.Atraccion;
+import com.parcialdds.disney.entity.producto.Turista;
 import com.parcialdds.disney.repository.AtraccionRepository;
 import com.parcialdds.disney.service.interfaces.AtraccionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class AtraccionServiceImpl implements AtraccionService {
     public Atraccion save(Atraccion atraccion) {
         return atraccionRepository.save(atraccion);
     }
+
+    @Override
+    @Transactional
+    public Iterable<Atraccion> saveAll(Iterable<Atraccion> atraccion) { return atraccionRepository.saveAll(atraccion); }
+
 
     @Override
     @Transactional
