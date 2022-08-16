@@ -2,6 +2,7 @@ package com.parcialdds.disney;
 
 import com.parcialdds.disney.entity.Usuario;
 import com.parcialdds.disney.entity.paquete.Paquete;
+import com.parcialdds.disney.entity.paquete.TipoHospedaje;
 import com.parcialdds.disney.entity.personaje.ApiDisney;
 import com.parcialdds.disney.entity.personaje.Atraccion;
 import com.parcialdds.disney.entity.personaje.Personaje;
@@ -68,6 +69,7 @@ public class Compra {
             if(p.getId() == codigoPaqueteElegido){
                 try {
                     paqueteElegido = p.clone();
+                    paqueteElegido.setId(null);
                 } catch(CloneNotSupportedException e){
                     e.printStackTrace();
                 }
@@ -112,11 +114,6 @@ public class Compra {
         return personajeFavorito;
     }
 
-    public void efectuarCompra(){
-        this.agregarTuristas();
-        this.pagar();
-    }
-
     private void agregarTuristas() {
         ArrayList<Turista> turistas = new ArrayList<>();
         System.out.println("Cuantas personas se hospedaran");
@@ -124,9 +121,9 @@ public class Compra {
         for(int i = 0; i < cantPersonas; i++){
             System.out.println("Ingrese el nombre de el/la turista");
             String nombre = scanner.next();
-            System.out.println("Ingrese el apellido de el/la turista");
+            System.out.println("Ingrese el apellido del turista");
             String apellido = scanner.next();
-            System.out.println("Ingrese el dni de el/la turista");
+            System.out.println("Ingrese el dni del turista");
             String dni = scanner.next();
             Turista turista = new Turista(nombre, apellido, dni);
             turistas.add(turista);
@@ -134,13 +131,14 @@ public class Compra {
         producto.setTurista(turistas);
     }
 
-    private void pagar() {
+    public void pagar(Usuario usuario, Producto producto) {
         System.out.println("Seleccionar medio de pago");
         System.out.println("Ingrese 1 para tarjeta Disney\n" + "Ingrese 2 para tarjeta de credito");
         int accion = scanner.nextInt();
         switch(accion){
             case 1: {
                 producto.setMedioDePago(new EstrategiaDisney());
+                producto.setMonto(producto.getPaquete().getMonto());
                 producto.setMontoFinal(producto.getMedioDePago().calcularMontoFinal(producto.getMonto(), producto.getTurista()));
                 int codigoOperacion = usuario.getTarjetaDisney().getEstado().efectuarPago(usuario.getTarjetaDisney(), producto.getMontoFinal());
                 if(codigoOperacion == 1){
@@ -155,6 +153,7 @@ public class Compra {
             } break;
             case 2: {
                 producto.setMedioDePago(new EstrategiaCredito());
+                producto.setMonto(producto.getPaquete().getMonto());
                 producto.setMontoFinal(producto.getMedioDePago().calcularMontoFinal(producto.getMonto(), producto.getTurista()));
                 System.out.println("Ingrese el numero de su tarjeta de credito");
                 String nroTarjeta = scanner.next();
@@ -179,5 +178,4 @@ public class Compra {
             }
         }
     }
-
 }

@@ -16,11 +16,11 @@ public class Producto {
     @Column
     private Integer montoFinal;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany
     @JoinColumn(name = "productoId")
     private List<Turista> turista = new ArrayList<>();
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private Paquete paquete;
 
     @ManyToMany

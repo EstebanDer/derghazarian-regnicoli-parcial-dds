@@ -31,6 +31,18 @@ public class DisneyApplication implements CommandLineRunner{
 
     @Autowired
     private PaqueteService paqueteService;
+
+    @Autowired
+    private AtraccionService atraccionService;
+
+    @Autowired
+    private ProductoService productoService;
+
+    @Autowired
+    private TuristaService turistaService;
+
+    @Autowired
+    private PersonajeService personajeService;
     //endregion
 
 	public static void main(String[] args) {
@@ -179,6 +191,7 @@ public class DisneyApplication implements CommandLineRunner{
 		}
 	}
 
+	// esto ya no se usa porque ya estan en la bd
 	private void generarPrototipos() {
 		Paquete paquetePareja, paqueteFamiliar, paquetePremium;
 
