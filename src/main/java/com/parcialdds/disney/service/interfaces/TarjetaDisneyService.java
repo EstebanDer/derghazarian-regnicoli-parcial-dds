@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface TarjetaDisneyService {
 
+    public boolean existsByNroTarjeta(String nroTarjeta);
+
     public Iterable<TarjetaDisney> findAll();
 
     public Page<TarjetaDisney> findAll(Pageable pageable);

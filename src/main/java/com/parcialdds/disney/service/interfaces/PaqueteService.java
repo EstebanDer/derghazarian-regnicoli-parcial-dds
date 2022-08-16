@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface PaqueteService {
     public Iterable<Paquete> findAll();
 
+    public Iterable<Paquete> findByEsPrototipoTrue();
+
     public Page<Paquete> findAll(Pageable pageable);
 
     public Optional<Paquete> findById(Long id);

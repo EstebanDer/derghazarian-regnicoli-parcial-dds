@@ -24,6 +24,25 @@ public class TarjetaDisney extends Tarjeta {
     @Transient
     private Estado estado;
 
+    public void inicializarEstado() {
+        switch (nombreEstado){
+            case "VERDE":{
+                estado = new Verde();
+            } break;
+            case "AMARILLO": {
+                estado = new Amarillo();
+            } break;
+            case "ROJO": {
+                estado = new Rojo();
+            } break;
+            default:
+                throw new IllegalStateException("Operacion desconocida: " + nombreEstado);
+
+        }
+
+    }
+
+
     //region getters y setters
     public TarjetaDisney(String nroTarjeta, String titular, LocalDate fechaVencimiento, Long id, Integer saldo, Estado estado) {
         super(nroTarjeta, titular, fechaVencimiento);
@@ -50,6 +69,7 @@ public class TarjetaDisney extends Tarjeta {
 
     public void setSaldo(Integer saldo) {
         this.saldo = saldo;
+        this.getEstado().actualizarEstado(this);
     }
 
     public String getNombreEstado() {

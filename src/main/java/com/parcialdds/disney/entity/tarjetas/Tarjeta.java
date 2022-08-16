@@ -1,7 +1,9 @@
 package com.parcialdds.disney.entity.tarjetas;
 
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
+@MappedSuperclass
 public class Tarjeta {
     private String nroTarjeta;
     private String titular;

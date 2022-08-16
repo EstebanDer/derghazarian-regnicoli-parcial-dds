@@ -25,6 +25,10 @@ public class PaqueteServiceImpl implements PaqueteService {
 
     @Override
     @Transactional(readOnly = true)
+    public Iterable<Paquete> findByEsPrototipoTrue() {return paqueteRepository.findByEsPrototipoTrue();}
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<Paquete> findAll(Pageable pageable) {
         return paqueteRepository.findAll(pageable);
     }

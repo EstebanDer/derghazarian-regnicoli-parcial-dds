@@ -47,5 +47,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public boolean existsByNombreAndContrasenia(String nombre, String contrasenia) {return usuarioRepository.existsByNombreAndContrasenia(nombre, contrasenia);}
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByNombreAndContrasenia(String nombre, String contrasenia) {return usuarioRepository.existsByNombreAndContrasenia(nombre, contrasenia); }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Usuario> findByNombreAndContrasenia(String nombre, String contrasenia) {return usuarioRepository.findByNombreAndContrasenia(nombre, contrasenia); }
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PaqueteRepository extends JpaRepository<Paquete, Long> {
+    public Iterable<Paquete> findByEsPrototipoTrue();
 }

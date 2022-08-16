@@ -10,14 +10,14 @@ public class Personaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20)
+    @Column(length = 30)
     private String nombre;
 
     private Integer idApi;
 
     @OneToMany
     @JoinColumn(name = "idPersonaje")
-    private List<Atraccion> atraccion;
+    private List<Atraccion> atraccion = new ArrayList<>();
 
     //region getters y setters
     public Personaje() {
@@ -63,7 +63,7 @@ public class Personaje {
     @Override
     public String toString() {
         return "Personaje{" +
-                ", nombre='" + nombre + '\'' +
+                " nombre='" + nombre + '\'' +
                 '}';
     }
     //endregion

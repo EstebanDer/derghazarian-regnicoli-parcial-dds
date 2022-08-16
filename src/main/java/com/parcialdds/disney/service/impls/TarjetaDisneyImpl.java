@@ -17,6 +17,10 @@ public class TarjetaDisneyImpl implements TarjetaDisneyService {
     @Autowired
     private TarjetaDisneyRepository tarjetaDisneyRepository;
 
+
+    @Override
+    public boolean existsByNroTarjeta(String nroTarjeta) { return tarjetaDisneyRepository.existsByNroTarjeta(nroTarjeta); }
+
     @Override
     @Transactional(readOnly = true)
     public Iterable<TarjetaDisney> findAll() {

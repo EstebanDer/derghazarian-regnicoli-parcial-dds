@@ -6,11 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Scanner;
+import java.util.*;
 
 @SpringBootApplication
 public class DisneyApplication implements CommandLineRunner{
 	static Scanner scanner = new Scanner(System.in);
+	private Usuario usuario;
 
     //region Servicios
 	@Autowired
@@ -40,9 +41,6 @@ public class DisneyApplication implements CommandLineRunner{
 
 	public static void main(String[] args) {
 		SpringApplication.run(DisneyApplication.class, args);
-		//TODO: agregar logica de repeticion
-
-
 	}
 
 	@Override
@@ -57,10 +55,10 @@ public class DisneyApplication implements CommandLineRunner{
 //		for(Usuario usuario : usuarios){
 //			System.out.println(usuario.toString());
 //		}
-
-
 		menuInicio();
-		menuPrincipal();
+		while(true) {
+			menuPrincipal();
+		}
 	}
 
 	private void menuInicio(){
@@ -68,13 +66,10 @@ public class DisneyApplication implements CommandLineRunner{
 		Integer accion = scanner.nextInt();
 		switch(accion) {
 			case 1: {
-				//TODO: ingresar al sistema
                 ingresar();
 			} break;
 			case 2: {
-				//TODO: registrarse en el sistema
                 registrar();
-				//TODO: ingresar al sistema
                 ingresar();
 			} break;
 			default:
@@ -89,17 +84,41 @@ public class DisneyApplication implements CommandLineRunner{
         String cuil = scanner.next();
         System.out.println("Ingrese una contrasenia");
         String contrasenia = scanner.next();
-        //TODO: Crear tarjeta disney para poder crear un usuario
+		String nroTarjeta = generarNumeroTarjeta();
+		TarjetaDisney tarjetaDisney = new TarjetaDisney(nroTarjeta, nombre, 100, (new Amarillo()));
+		List<TarjetaCredito> tarjetasCredito = new ArrayList<TarjetaCredito>();
+		usuario = new Usuario(nombre, contrasenia, cuil, tarjetaDisney, tarjetasCredito);
+		usuarioService.save(usuario);
     }
 
-    private void ingresar() {
+	private String generarNumeroTarjeta() {
+		String nroTarjeta = "";
+		do {
+			for(int i = 0; i < 16; i++){
+				int random = (int)(Math.random() * 10 + 1);
+				nroTarjeta = nroTarjeta + String.valueOf(random);
+			}
+		} while(tarjetaDisneyService.existsByNroTarjeta(nroTarjeta));
+
+		return nroTarjeta;
+	}
+
+	private void ingresar() {
         System.out.println("Ingrese su nombre de usuario");
         String nombre = scanner.next();
         System.out.println("Ingrese su contrasenia");
         String contrasenia = scanner.next();
         if(!usuarioService.existsByNombreAndContrasenia(nombre, contrasenia)){
-            //TODO: Que pasa si no es correcto?
+            System.out.println("Credenciales incorrectas, intente nuevamente");
+            ingresar();//TODO: Corregir
         }
+		if(usuarioService.findByNombreAndContrasenia(nombre, contrasenia).isPresent()){
+			usuario = usuarioService.findByNombreAndContrasenia(nombre, contrasenia).get();
+			usuario.getTarjetaDisney().inicializarEstado();
+		} else{
+			throw new NoSuchElementException();
+		}
+
     }
 
     private void menuPrincipal() {
@@ -110,14 +129,18 @@ public class DisneyApplication implements CommandLineRunner{
 			case 1: {
 				System.out.println("Si desea registrar un nuevo medio de pago ingrese 1 \n" +
 						"Si desea eliminar un medio de pago ingrese 2\n" +
-						"Si desea cargar su tarjeta Disney 3\n");
+						"Si desea cargar su tarjeta Disney ingrese 3");
 				Integer accionTarjeta = scanner.nextInt();
 				switch (accionTarjeta) {
 					case 1: {
 						//TODO: registrar medio de pago
 					} break;
 					case 2: {
-						//TODO: eliminar medio de pago
+						System.out.println("Ingrese el numero de la tarjeta a borrar");
+						String nroTarjeta = scanner.next();
+
+						usuario.borrarTarjeta(nroTarjeta);
+						tarjetaCreditoService.deleteByNroTarjeta(nroTarjeta);
 					} break;
 					case 3: {
 						//TODO: cargar tarjeta Disney
@@ -129,6 +152,9 @@ public class DisneyApplication implements CommandLineRunner{
 			} break;
 			case 2: {
 				//TODO: realizar compra
+			} break;
+			case 3: {
+				 System.exit(0);
 			} break;
 			default:
 				throw new IllegalStateException("Operacion desconocida: " + accion);

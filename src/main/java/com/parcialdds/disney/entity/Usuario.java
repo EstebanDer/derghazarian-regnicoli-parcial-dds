@@ -111,6 +111,38 @@ public class Usuario {
         this.tarjetaCredito = tarjetaCredito;
     }
 
+    public List<TarjetaCredito> getTarjetaCredito() {
+        return tarjetaCredito;
+    }
+
+    public void setTarjetaCredito(List<TarjetaCredito> tarjetaCredito) {
+        this.tarjetaCredito = tarjetaCredito;
+    }
+
+    public List<Producto> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(List<Producto> producto) {
+        this.producto = producto;
+    }
+
+    public Personaje getPersonajeElegido() {
+        return personajeElegido;
+    }
+
+    public void setPersonajeElegido(Personaje personajeElegido) {
+        this.personajeElegido = personajeElegido;
+    }
+
+    public Paquete getPaqueteElegido() {
+        return paqueteElegido;
+    }
+
+    public void setPaqueteElegido(Paquete paqueteElegido) {
+        this.paqueteElegido = paqueteElegido;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -118,6 +150,8 @@ public class Usuario {
                 ", cuil='" + cuil + '\'' +
                 '}';
     }
+
+
 
     //endregion
 }

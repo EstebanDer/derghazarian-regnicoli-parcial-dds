@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TarjetaDisneyRepository extends JpaRepository<TarjetaDisney, Long> {
+    public boolean existsByNroTarjeta(String nroTarjeta);
 }

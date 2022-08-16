@@ -47,4 +47,12 @@ public class TarjetaCreditoServiceImpl implements TarjetaCreditoService {
     public void deleteById(Long id) {
         tarjetaCreditoRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public void deleteByNroTarjeta(String nroTarjeta) { tarjetaCreditoRepository.deleteByNroTarjeta(nroTarjeta);}
+
+    @Override
+    @Transactional
+    public Optional<TarjetaCredito> findByNroTarjeta(String nroTarjeta) { return tarjetaCreditoRepository.findByNroTarjeta(nroTarjeta);}
 }

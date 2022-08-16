@@ -20,7 +20,7 @@ public class Producto {
     @JoinColumn(name = "productoId")
     private List<Turista> turista = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Paquete paquete;
 
     @ManyToMany

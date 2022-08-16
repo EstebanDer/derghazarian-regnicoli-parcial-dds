@@ -17,4 +17,8 @@ public interface TarjetaCreditoService {
     public TarjetaCredito save(TarjetaCredito tarjetaCredito);
 
     public void deleteById(Long id);
+
+    public void deleteByNroTarjeta(String nroTarjeta);
+
+    public Optional<TarjetaCredito> findByNroTarjeta(String nroTarjeta);
 }
